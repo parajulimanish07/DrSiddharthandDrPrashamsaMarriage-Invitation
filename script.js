@@ -239,6 +239,11 @@
     });
     audio.addEventListener("play", () => musicBtn.classList.add("playing"));
     audio.addEventListener("pause", () => musicBtn.classList.remove("playing"));
+    if (W.musicCredit) {
+      const credit = $("#musicCredit");
+      credit.textContent = `Music: ${W.musicCredit}`;
+      credit.hidden = false;
+    }
   }
 
   // ── Cover / open invitation ─────────────────────

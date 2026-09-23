@@ -66,5 +66,7 @@ window.WEDDING = {
   hashtag: "#SiddharthaWedsPrashamsa",
 
   // Optional background music, e.g. "assets/music.mp3". Leave "" to hide the button.
-  music: "",
+  music: "assets/music.mp3",
+  // Credit shown in the footer when music is set (required by the track's CC BY license). Leave "" to hide.
+  musicCredit: '"A Day To Remember" by Benjamin Tissot (bensound.com), CC BY 4.0',
 };
