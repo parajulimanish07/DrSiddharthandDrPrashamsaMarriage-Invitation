@@ -191,6 +191,14 @@
       });
     });
 
+    const wishName = $("#wishName");
+    const wishAnonymous = $("#wishAnonymous");
+    wishAnonymous.addEventListener("change", () => {
+      wishName.required = !wishAnonymous.checked;
+      wishName.disabled = wishAnonymous.checked;
+      wishName.placeholder = wishAnonymous.checked ? "Name hidden" : "Enter your name*";
+    });
+
     const wishList = $("#wishList");
     const renderWishes = (wishes) => {
       wishList.replaceChildren();
@@ -238,6 +246,19 @@
     $("#cover").classList.add("opened");
     document.body.classList.remove("locked");
     setTimeout(() => $("#cover").remove(), 1100);
+
+    const petals = $("#petals");
+    for (let i = 0; i < 28; i++) {
+      const petal = el("span", { class: "petal" });
+      const size = 8 + Math.random() * 10;
+      petal.style.left = `${Math.random() * 100}%`;
+      petal.style.width = petal.style.height = `${size}px`;
+      petal.style.animationDuration = `${2.5 + Math.random() * 1.8}s`;
+      petal.style.animationDelay = `${Math.random() * 0.6}s`;
+      petal.style.setProperty("--drift", `${(Math.random() - 0.5) * 120}px`);
+      petals.append(petal);
+    }
+    setTimeout(() => petals.replaceChildren(), 5000);
     if (W.music) {
       musicBtn.hidden = false;
       audio.play().catch(() => {});

@@ -72,6 +72,22 @@ img { display: block; max-width: 100%; }
   pointer-events: none;
 }
 .cover.opened { opacity: 0; transform: scale(1.08); pointer-events: none; }
+
+.petals-overlay { position: fixed; inset: 0; z-index: 150; overflow: hidden; pointer-events: none; }
+.petal {
+  position: absolute;
+  top: -8%;
+  background: radial-gradient(circle at 30% 30%, var(--gold-light), var(--gold));
+  border-radius: 60% 0 60% 0;
+  opacity: .9;
+  animation: petal-fall linear forwards;
+}
+@keyframes petal-fall {
+  to { transform: translateY(115vh) translateX(var(--drift, 0)) rotate(360deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .petal { display: none; }
+}
 .cover-top { font-size: 1.6rem; margin-bottom: 1.5rem; }
 .monogram {
   width: 140px; height: 140px; margin: 0 auto 1.5rem;
@@ -282,7 +298,15 @@ img { display: block; max-width: 100%; }
 }
 .card-form .btn { align-self: center; margin-top: .4rem; }
 .card-form .btn:disabled { opacity: .6; cursor: wait; }
+.card-form input:disabled { opacity: .55; background: var(--cream); cursor: not-allowed; }
 .form-status { min-height: 1.4em; font-style: italic; color: var(--maroon); }
+
+.checkbox-field {
+  display: flex; align-items: center; gap: .6rem;
+  font-family: var(--sans); font-size: .85rem; color: var(--muted);
+  cursor: pointer;
+}
+.checkbox-field input { width: 1.1rem; height: 1.1rem; accent-color: var(--gold); cursor: pointer; }
 
 .guestbook { background: #fff; }
 .wishes {

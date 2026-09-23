@@ -41,21 +41,17 @@ window.WEDDING = {
     year: "2026",
     time: "10:00 AM",
     venue: "Golden Palace",
-    address: "Pepsicola, Kathmandu",
-    // Link used by the "Get Directions" button.
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=Golden+Palace+Pepsicola+Kathmandu",
-    // Google Maps embed (Share → Embed a map → copy the src="..." value). Leave "" to hide.
-    mapEmbedUrl: "https://maps.google.com/maps?q=Golden%20Palace%20Pepsicola%20Kathmandu&z=15&output=embed",
+    address: "Gankhu, Bhaktapur",
+    // Link used by the "Get Directions" button — the venue's exact Google Maps pin.
+    mapUrl: "https://maps.app.goo.gl/azaG9FjEzNizc6TD8",
+    // Google Maps embed centered on the exact pin above. Leave "" to hide.
+    mapEmbedUrl: "https://maps.google.com/maps?q=27.6845405,85.3963109&z=17&output=embed",
   },
 
   // Photos placed in images/gallery/. Missing files are skipped automatically.
+  // TEMP: reusing the couple illustration as a placeholder until real photos are added.
   gallery: [
-    "images/gallery/1.jpg",
-    "images/gallery/2.jpg",
-    "images/gallery/3.jpg",
-    "images/gallery/4.jpg",
-    "images/gallery/5.jpg",
-    "images/gallery/6.jpg",
+    "images/couple.webp",
   ],
 
   /*
@@ -64,7 +60,7 @@ window.WEDDING = {
    * free Google Sheet. Follow the steps in docs/GUESTBOOK_SETUP.md and paste the
    * Web App URL here. Until then the RSVP and Guestbook sections stay hidden.
    */
-  backendUrl: "",
+  backendUrl: "https://script.google.com/macros/s/AKfycbx0UGmp96n7vyAlprx8XM6YkUanv3Ym09-EcnMy4_wjAqSBQ8TTX7JdeX1cz33nMOI/exec",
 
   closingLine: "Your presence would be the greatest gift we could receive!",
   hashtag: "#SiddharthaWedsPrashamsa",

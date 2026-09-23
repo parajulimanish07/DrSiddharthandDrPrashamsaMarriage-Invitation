@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Siddhartha & Prashamsa — Wedding Invitation</title>
-  <meta name="description" content="You are cordially invited to the wedding of Dr. Siddhartha Regmi and Dr. Prashamsa Parajuli — Saturday, 5 December 2026, Golden Palace, Pepsicola." />
+  <meta name="description" content="You are cordially invited to the wedding of Dr. Siddhartha Regmi and Dr. Prashamsa Parajuli — Saturday, 5 December 2026, Golden Palace, Gankhu, Bhaktapur." />
   <meta property="og:title" content="The Wedding of Dr. Siddhartha Regmi & Dr. Prashamsa Parajuli" />
-  <meta property="og:description" content="Saturday, 5 December 2026 · 10:00 AM · Golden Palace, Pepsicola" />
+  <meta property="og:description" content="Saturday, 5 December 2026 · 10:00 AM · Golden Palace, Gankhu, Bhaktapur" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://parajulimanish07.github.io/DrSiddharthandDrPrashamsaMarriage-Invitation/" />
   <meta property="og:image" content="https://parajulimanish07.github.io/DrSiddharthandDrPrashamsaMarriage-Invitation/images/og.jpg" />
@@ -29,6 +29,7 @@
       <button id="openBtn" class="btn">Open Invitation</button>
     </div>
   </div>
+  <div id="petals" class="petals-overlay" aria-hidden="true"></div>
 
   <button id="musicBtn" class="music-btn" aria-label="Toggle music" hidden>♪</button>
   <audio id="bgMusic" loop></audio>
@@ -160,7 +161,11 @@
     <section class="section guestbook" id="guestbook" hidden>
       <h2 class="section-title reveal">Guestbook</h2>
       <form class="card-form reveal" id="wishForm">
-        <input name="name" placeholder="Enter your name*" required maxlength="80" />
+        <input name="name" id="wishName" placeholder="Enter your name*" required maxlength="80" />
+        <label class="checkbox-field">
+          <input type="checkbox" name="anonymous" id="wishAnonymous" />
+          Send this blessing anonymously
+        </label>
         <textarea name="message" placeholder="Enter your wishes*" required maxlength="600" rows="4"></textarea>
         <button class="btn" type="submit">Send Wishes</button>
         <p class="form-status" role="status"></p>

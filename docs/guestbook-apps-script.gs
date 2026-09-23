@@ -26,11 +26,11 @@ function clean_(value, max) {
 // GET ?type=wishes → latest wishes, newest first
 function doGet(e) {
   if (e.parameter.type !== "wishes") return json_({ ok: false, error: "Unknown request" });
-  const rows = sheet_("Wishes", ["Timestamp", "Name", "Message"]).getDataRange().getValues().slice(1);
+  const rows = sheet_("Wishes", ["Timestamp", "Name", "Message", "Anonymous"]).getDataRange().getValues().slice(1);
   const wishes = rows
     .reverse()
     .slice(0, MAX_WISHES)
-    .map((r) => ({ name: r[1], message: r[2] }));
+    .map((r) => ({ name: String(r[3]).toLowerCase() === "yes" ? "A well-wisher" : r[1], message: r[2] }));
   return json_({ ok: true, wishes });
 }
 
@@ -43,9 +43,9 @@ function doPost(e) {
     return json_({ ok: false, error: "Bad request" });
   }
   const name = clean_(data.name, 80);
-  if (!name) return json_({ ok: false, error: "Name is required" });
 
   if (data.type === "rsvp") {
+    if (!name) return json_({ ok: false, error: "Name is required" });
     sheet_("RSVP", ["Timestamp", "Name", "Phone", "Attending", "Guests"]).appendRow([
       new Date(), name, clean_(data.phone, 30), clean_(data.attending, 5), clean_(data.guests, 3),
     ]);
@@ -55,7 +55,10 @@ function doPost(e) {
   if (data.type === "wish") {
     const message = clean_(data.message, 600);
     if (!message) return json_({ ok: false, error: "Message is required" });
-    sheet_("Wishes", ["Timestamp", "Name", "Message"]).appendRow([new Date(), name, message]);
+    const isAnonymous = !!data.anonymous;
+    sheet_("Wishes", ["Timestamp", "Name", "Message", "Anonymous"]).appendRow([
+      new Date(), name || "Anonymous", message, isAnonymous ? "Yes" : "No",
+    ]);
     return json_({ ok: true });
   }
 

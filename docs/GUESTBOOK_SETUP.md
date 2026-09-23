@@ -16,5 +16,9 @@ The "Confirm Attendance" and "Guestbook" sections appear automatically once `bac
 RSVPs land in the **RSVP** tab, and wishes in the **Wishes** tab. To remove an inappropriate
 wish, delete its row in the sheet.
 
+Guests can check "Send this blessing anonymously" — the name field is skipped entirely, the wish
+is recorded in the sheet as "Anonymous" (column D marks it as such), and the site displays it as
+"A well-wisher" instead of a name.
+
 If you edit the script later, use **Deploy → Manage deployments → Edit → New version**
 so the same URL keeps working.

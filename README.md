@@ -2,7 +2,7 @@
 
 A single-page wedding invitation website. It uses plain HTML, CSS and JavaScript with no build step.
 
-**Reception:** Saturday, 5 December 2026 · 10:00 AM · Golden Palace, Pepsicola
+**Reception:** Saturday, 5 December 2026 · 10:00 AM · Golden Palace, Gankhu, Bhaktapur
 
 ## Editing details
 
