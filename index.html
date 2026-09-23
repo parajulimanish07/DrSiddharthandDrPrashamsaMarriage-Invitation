@@ -7,11 +7,9 @@
   <meta name="description" content="You are cordially invited to the wedding of Dr. Siddhartha Regmi and Dr. Prashamsa Parajuli — Saturday, 5 December 2026, Golden Palace, Pepsicola." />
   <meta property="og:title" content="The Wedding of Dr. Siddhartha Regmi & Dr. Prashamsa Parajuli" />
   <meta property="og:description" content="Saturday, 5 December 2026 · 10:00 AM · Golden Palace, Pepsicola" />
-  <meta property="og:image" content="images/couple.jpg" />
+  <meta property="og:image" content="images/couple.webp" />
   <meta name="theme-color" content="#6b1020" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Tiro+Devanagari+Hindi&family=Montserrat:wght@300;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/fonts.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="locked">
@@ -34,8 +32,13 @@
     <!-- Hero -->
     <section class="hero" id="home">
       <div class="hero-bg"></div>
+      <div class="hero-card reveal">
+        <div class="arch-text">
+          <p class="script arch-names"><span data-bind="groomShort"></span> <em>&amp;</em> <span data-bind="brideShort"></span></p>
+        </div>
+      </div>
       <div class="hero-content reveal">
-        <p class="devanagari" data-bind="blessingNepali"></p>
+        <p class="devanagari blessing-np" data-bind="blessingNepali"></p>
         <p class="eyebrow">The wedding of</p>
         <h1 class="script names">
           <span data-bind="groomName"></span>
@@ -62,13 +65,13 @@
     <section class="section couple" id="couple">
       <div class="couple-grid">
         <article class="person reveal">
-          <div class="frame"><img data-src="groomPhoto" alt="Dr. Siddhartha Regmi" /></div>
+          <div class="frame"><div class="portrait" data-portrait="groom" role="img" aria-label="Dr. Siddhartha Regmi"></div></div>
           <h3 class="script" data-bind="groomName"></h3>
           <p class="role">Groom</p>
         </article>
         <div class="heart reveal">&amp;</div>
         <article class="person reveal">
-          <div class="frame"><img data-src="bridePhoto" alt="Dr. Prashamsa Parajuli" /></div>
+          <div class="frame"><div class="portrait" data-portrait="bride" role="img" aria-label="Dr. Prashamsa Parajuli"></div></div>
           <h3 class="script" data-bind="brideName"></h3>
           <p class="role">Bride</p>
         </article>

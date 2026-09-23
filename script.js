@@ -46,15 +46,17 @@
   renderFamily($("#brideFamily"), W.bride);
 
   // ── Images ──────────────────────────────────────
-  const images = { groomPhoto: W.groom.photo, bridePhoto: W.bride.photo };
-  document.querySelectorAll("img[data-src]").forEach((img) => {
-    img.addEventListener("error", () => img.classList.add("missing"));
-    img.src = images[img.dataset.src];
+  document.querySelectorAll("[data-portrait]").forEach((box) => {
+    const photo = W[box.dataset.portrait].photo;
+    const cfg = typeof photo === "string" ? { src: photo } : photo;
+    box.style.backgroundImage = `url("${cfg.src}")`;
+    box.style.backgroundSize = cfg.zoom || "cover";
+    box.style.backgroundPosition = `${cfg.x || "center"} ${cfg.y || "center"}`;
   });
   if (W.couplePhoto) {
-    const probe = new Image();
-    probe.onload = () => { $(".hero-bg").style.backgroundImage = `url("${W.couplePhoto}")`; };
-    probe.src = W.couplePhoto;
+    const url = `url("${W.couplePhoto}")`;
+    $(".hero-card").style.backgroundImage = url;
+    $(".hero-bg").style.backgroundImage = url;
   }
 
   // ── Calendar ────────────────────────────────────

@@ -8,7 +8,8 @@ window.WEDDING = {
   groom: {
     name: "Dr. Siddhartha Regmi",
     shortName: "Siddhartha",
-    photo: "images/groom.jpg",
+    // Portrait: any photo. zoom/x/y crop into it ("cover"/"center" shows a normal photo).
+    photo: { src: "images/couple.webp", zoom: "360%", x: "65%", y: "40%" },
     parents: ["Mr. Giri Raj Regmi", "Mrs. Sarita Regmi"],
     home: "Imadol, Lalitpur",
   },
@@ -16,13 +17,13 @@ window.WEDDING = {
   bride: {
     name: "Dr. Prashamsa Parajuli",
     shortName: "Prashamsa",
-    photo: "images/bride.jpg",
+    photo: { src: "images/couple.webp", zoom: "360%", x: "39%", y: "43%" },
     parents: ["Mr. Phanindra Prasad Parajuli", "Mrs. Yasoda Parajuli"],
     home: "Naya Thimi, Bhaktapur",
   },
 
-  // Main photo of the couple, shown behind the names at the top.
-  couplePhoto: "images/couple.jpg",
+  // Main illustration of the couple, shown at the top with the names in its arch.
+  couplePhoto: "images/couple.webp",
 
   blessing: {
     nepali: "॥ श्री गणेशाय नमः ॥",
