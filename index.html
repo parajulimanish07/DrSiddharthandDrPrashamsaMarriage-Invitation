@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siddhartha & Prashamsa — Wedding Invitation</title>
+  <meta name="description" content="You are cordially invited to the wedding of Dr. Siddhartha Regmi and Dr. Prashamsa Parajuli — Saturday, 5 December 2026, Golden Palace, Pepsicola." />
+  <meta property="og:title" content="The Wedding of Dr. Siddhartha Regmi & Dr. Prashamsa Parajuli" />
+  <meta property="og:description" content="Saturday, 5 December 2026 · 10:00 AM · Golden Palace, Pepsicola" />
+  <meta property="og:image" content="images/couple.jpg" />
+  <meta name="theme-color" content="#6b1020" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Tiro+Devanagari+Hindi&family=Montserrat:wght@300;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="locked">
+
+  <!-- Opening cover -->
+  <div id="cover" class="cover">
+    <div class="cover-inner">
+      <p class="devanagari cover-top">शुभ विवाह</p>
+      <div class="monogram"><span data-bind="groomInitial"></span><em>&amp;</em><span data-bind="brideInitial"></span></div>
+      <p class="cover-sub">The wedding of</p>
+      <h1 class="script"><span data-bind="groomShort"></span> &amp; <span data-bind="brideShort"></span></h1>
+      <button id="openBtn" class="btn">Open Invitation</button>
+    </div>
+  </div>
+
+  <button id="musicBtn" class="music-btn" aria-label="Toggle music" hidden>♪</button>
+  <audio id="bgMusic" loop></audio>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="hero-content reveal">
+        <p class="devanagari" data-bind="blessingNepali"></p>
+        <p class="eyebrow">The wedding of</p>
+        <h1 class="script names">
+          <span data-bind="groomName"></span>
+          <span class="amp">&amp;</span>
+          <span data-bind="brideName"></span>
+        </h1>
+        <p class="date-line" data-bind="dateLine"></p>
+      </div>
+      <a href="#families" class="scroll-hint" aria-label="Scroll down">⌄</a>
+    </section>
+
+    <!-- Families -->
+    <section class="section families" id="families">
+      <h2 class="section-title reveal">Ceremony Info</h2>
+      <div class="family-grid">
+        <div class="family reveal" id="groomFamily"></div>
+        <div class="family reveal" id="brideFamily"></div>
+      </div>
+      <div class="ornament reveal">❦</div>
+      <p class="eyebrow announce reveal" data-bind="blessingMessage"></p>
+    </section>
+
+    <!-- Couple -->
+    <section class="section couple" id="couple">
+      <div class="couple-grid">
+        <article class="person reveal">
+          <div class="frame"><img data-src="groomPhoto" alt="Dr. Siddhartha Regmi" /></div>
+          <h3 class="script" data-bind="groomName"></h3>
+          <p class="role">Groom</p>
+        </article>
+        <div class="heart reveal">&amp;</div>
+        <article class="person reveal">
+          <div class="frame"><img data-src="bridePhoto" alt="Dr. Prashamsa Parajuli" /></div>
+          <h3 class="script" data-bind="brideName"></h3>
+          <p class="role">Bride</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Reception -->
+    <section class="section reception" id="reception">
+      <h2 class="section-title light reveal">Reception Info</h2>
+      <p class="reveal">The reception will take place at</p>
+      <div class="big-date reveal">
+        <div class="bd-side"><span data-bind="time"></span></div>
+        <div class="bd-main">
+          <small data-bind="weekday"></small>
+          <strong data-bind="day"></strong>
+          <small data-bind="monthYear"></small>
+        </div>
+        <div class="bd-side"><span data-bind="venue"></span></div>
+      </div>
+      <p class="venue-addr reveal"><span data-bind="venue"></span>, <span data-bind="address"></span></p>
+
+      <h3 class="sub-title reveal">Countdown</h3>
+      <div class="countdown reveal" id="countdown">
+        <div><span id="cd-days">0</span><small>Days</small></div>
+        <div><span id="cd-hours">0</span><small>Hours</small></div>
+        <div><span id="cd-mins">0</span><small>Minutes</small></div>
+        <div><span id="cd-secs">0</span><small>Seconds</small></div>
+      </div>
+      <p class="countdown-done" id="countdownDone" hidden>The celebration has begun!</p>
+    </section>
+
+    <!-- Calendar -->
+    <section class="section calendar-section" id="calendar">
+      <div class="calendar reveal">
+        <h3 class="cal-title" id="calTitle"></h3>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <div class="cal-actions reveal">
+        <a class="btn" id="gcalBtn" target="_blank" rel="noopener">Add to Google Calendar</a>
+        <button class="btn btn-outline" id="icsBtn">Download .ics</button>
+      </div>
+    </section>
+
+    <!-- Venue -->
+    <section class="section map-section" id="venue">
+      <h2 class="section-title reveal">Wedding Reception Venue</h2>
+      <p class="venue-name reveal" data-bind="venueFull"></p>
+      <div class="map-wrap reveal" id="mapWrap" hidden><iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Venue map"></iframe></div>
+      <a class="btn reveal" id="directionsBtn" target="_blank" rel="noopener">Get Directions</a>
+    </section>
+
+    <!-- Gallery -->
+    <section class="section gallery-section" id="gallery">
+      <h2 class="section-title reveal">Moments</h2>
+      <div class="gallery" id="galleryGrid"></div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="section rsvp" id="rsvp" hidden>
+      <h2 class="section-title reveal">Confirm Attendance</h2>
+      <form class="card-form reveal" id="rsvpForm">
+        <input name="name" placeholder="Your name*" required maxlength="80" />
+        <input name="phone" placeholder="Phone number" maxlength="30" />
+        <select name="attending" required>
+          <option value="yes">Joyfully attending</option>
+          <option value="no">Regretfully can't attend</option>
+        </select>
+        <select name="guests">
+          <option value="1">1 guest</option>
+          <option value="2">2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+          <option value="5">5+ guests</option>
+        </select>
+        <button class="btn" type="submit">Confirm</button>
+        <p class="form-status" role="status"></p>
+      </form>
+    </section>
+
+    <!-- Guestbook -->
+    <section class="section guestbook" id="guestbook" hidden>
+      <h2 class="section-title reveal">Guestbook</h2>
+      <form class="card-form reveal" id="wishForm">
+        <input name="name" placeholder="Enter your name*" required maxlength="80" />
+        <textarea name="message" placeholder="Enter your wishes*" required maxlength="600" rows="4"></textarea>
+        <button class="btn" type="submit">Send Wishes</button>
+        <p class="form-status" role="status"></p>
+      </form>
+      <div class="wishes" id="wishList"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="closing" data-bind="closingLine"></p>
+    <p class="script" data-bind="coupleShort"></p>
+    <p class="hashtag" data-bind="hashtag"></p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" hidden>
+    <button class="lb-close" aria-label="Close">×</button>
+    <img alt="" />
+  </div>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
