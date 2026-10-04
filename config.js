@@ -70,8 +70,8 @@ window.WEDDING = {
   closingLine: "Your presence would be the greatest gift we could receive!",
   hashtag: "#SiddharthaWedsPrashamsa",
 
-  // Optional background music, e.g. "assets/music.mp3". Leave "" to hide the button.
-  music: "assets/music.mp3",
-  // Credit shown in the footer when music is set (required by the track's CC BY license). Leave "" to hide.
-  musicCredit: '"A Day To Remember" by Benjamin Tissot (bensound.com), CC BY 4.0',
+  // Optional background music, e.g. "assets/wedding-song.mp3". Leave "" to hide the button.
+  music: "assets/wedding-song.mp3",
+  // Optional credit shown in the footer (needed for CC-licensed tracks). Leave "" to hide.
+  musicCredit: "",
 };
