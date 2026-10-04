@@ -1,6 +1,6 @@
 (function () {
   const W = window.WEDDING;
-  const R = W.reception;
+  const R = W.ceremony;
   const $ = (sel) => document.querySelector(sel);
 
   const el = (tag, attrs = {}, text) => {
@@ -24,6 +24,13 @@
     blessingMessage: W.blessing.message,
     dateLine: `${R.weekday} · ${Number(R.day)} ${R.month} ${R.year}`,
     time: R.time,
+    timeLabel: R.timeLabel,
+    ceremonyTitle: R.title,
+    ceremonySubtitle: R.subtitle,
+    ceremonyDescription: R.description,
+    nepaliDate: R.nepaliDate,
+    blessingClosing: W.blessing.closing,
+    blessingSignoff: W.blessing.signoff,
     weekday: R.weekday,
     day: R.day,
     monthYear: `${R.month} ${R.year}`,
@@ -39,9 +46,10 @@
 
   // ── Families ────────────────────────────────────
   const renderFamily = (box, person) => {
-    box.append(el("p", { class: "eyebrow" }, "Mr. & Mrs."));
+    box.append(el("p", { class: "eyebrow" }, "With the blessings of"));
     person.parents.forEach((p) => box.append(el("p", { class: "parent-name" }, p.replace(/^(Mr|Mrs)\.\s*/, ""))));
     box.append(el("p", { class: "home" }, person.home));
+    box.append(el("p", { class: "family-invite" }, person.invite));
   };
   renderFamily($("#groomFamily"), W.groom);
   renderFamily($("#brideFamily"), W.bride);
@@ -72,7 +80,7 @@
   const daysInMonth = new Date(year, monthIdx + 1, 0).getDate();
   for (let i = 0; i < firstDow; i++) calGrid.append(el("span"));
   for (let d = 1; d <= daysInMonth; d++) {
-    calGrid.append(el("span", d === dayNum ? { class: "day wedding-day", title: "Wedding Reception" } : { class: "day" }, String(d)));
+    calGrid.append(el("span", d === dayNum ? { class: "day wedding-day", title: "Wedding Ceremony" } : { class: "day" }, String(d)));
   }
 
   // Add to calendar

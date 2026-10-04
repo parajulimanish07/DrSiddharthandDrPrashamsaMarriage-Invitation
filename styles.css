@@ -187,7 +187,7 @@ img { display: block; max-width: 100%; }
     radial-gradient(circle, rgba(201, 162, 74, .16) 1px, transparent 1.5px) 0 0 / 22px 22px,
     var(--cream);
 }
-.section + .section:not(.reception)::before {
+.section + .section:not(.ceremony)::before {
   content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
   width: min(260px, 60%); height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
@@ -247,8 +247,8 @@ img { display: block; max-width: 100%; }
 .home { font-style: italic; color: var(--muted); margin-top: .6rem; }
 .announce { color: var(--maroon); max-width: 520px; margin: 0 auto; line-height: 2; }
 
-/* Reception */
-.reception {
+/* Ceremony */
+.ceremony {
   background: linear-gradient(160deg, var(--maroon), var(--maroon-deep));
   color: #fff;
 }
@@ -389,3 +389,12 @@ img { display: block; max-width: 100%; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .scroll-hint, .music-btn.playing .note { animation: none; }
 }
+
+/* Ceremony + family additions */
+.ceremony-sub { color: var(--gold-light); font-size: 1.5rem; margin-bottom: .4rem; }
+.ceremony-desc { font-style: italic; max-width: 520px; margin: 0 auto 1rem; opacity: .9; }
+.nepali-date { color: var(--gold-light); margin-bottom: .4rem; }
+.family-invite { font-size: 1rem; margin-top: .8rem; max-width: 330px; margin-inline: auto; }
+.blessing-closing { max-width: 560px; margin: 0 auto 1rem; font-size: 1.1rem; opacity: .9; }
+.signoff { font-family: var(--script); font-size: 1.8rem; color: #fff; }
+.ornament-sm { font-size: 1.6rem; color: var(--gold); margin: 1rem 0; }

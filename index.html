@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Siddhartha & Prashamsa — Wedding Invitation</title>
-  <meta name="description" content="You are cordially invited to the wedding of Dr. Siddhartha Regmi and Dr. Prashamsa Parajuli — Saturday, 5 December 2026, Golden Palace, Gankhu, Bhaktapur." />
+  <meta name="description" content="You are cordially invited to the wedding of Dr. Siddhartha Regmi and Dr. Prashamsa Parajuli — Wedding ceremony on Saturday, 5 December 2026, 10:00 AM, Golden Palace, Gankhu, Bhaktapur." />
   <meta property="og:title" content="The Wedding of Dr. Siddhartha Regmi & Dr. Prashamsa Parajuli" />
   <meta property="og:description" content="Saturday, 5 December 2026 · 10:00 AM · Golden Palace, Gankhu, Bhaktapur" />
   <meta property="og:type" content="website" />
@@ -88,12 +88,13 @@
       </div>
     </section>
 
-    <!-- Reception -->
-    <section class="section reception" id="reception">
-      <h2 class="section-title light reveal">Reception Info</h2>
-      <p class="reveal">The reception will take place at</p>
+    <!-- Ceremony -->
+    <section class="section ceremony" id="ceremony">
+      <h2 class="section-title light reveal">Wedding Ceremony</h2>
+      <p class="devanagari ceremony-sub reveal" data-bind="ceremonySubtitle"></p>
+      <p class="reveal ceremony-desc" data-bind="ceremonyDescription"></p>
       <div class="big-date reveal">
-        <div class="bd-side"><span data-bind="time"></span></div>
+        <div class="bd-side"><span data-bind="timeLabel"></span><br /><span data-bind="time"></span></div>
         <div class="bd-main">
           <small data-bind="weekday"></small>
           <strong data-bind="day"></strong>
@@ -101,6 +102,7 @@
         </div>
         <div class="bd-side"><span data-bind="venue"></span></div>
       </div>
+      <p class="devanagari nepali-date reveal" data-bind="nepaliDate"></p>
       <p class="venue-addr reveal"><span data-bind="venue"></span>, <span data-bind="address"></span></p>
 
       <h3 class="sub-title reveal">Countdown</h3>
@@ -127,7 +129,7 @@
 
     <!-- Venue -->
     <section class="section map-section" id="venue">
-      <h2 class="section-title reveal">Wedding Reception Venue</h2>
+      <h2 class="section-title reveal">Ceremony Venue</h2>
       <p class="venue-name reveal" data-bind="venueFull"></p>
       <div class="map-wrap reveal" id="mapWrap" hidden><iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Venue map"></iframe></div>
       <a class="btn reveal" id="directionsBtn" target="_blank" rel="noopener">Get Directions</a>
@@ -175,6 +177,9 @@
   </main>
 
   <footer class="footer">
+    <p class="blessing-closing" data-bind="blessingClosing"></p>
+    <p class="signoff" data-bind="blessingSignoff"></p>
+    <p class="ornament-sm">❦</p>
     <p class="closing" data-bind="closingLine"></p>
     <p class="script" data-bind="coupleShort"></p>
     <p class="hashtag" data-bind="hashtag"></p>

@@ -10,7 +10,8 @@ window.WEDDING = {
     shortName: "Siddhartha",
     // Portrait: any photo. zoom/x/y crop into it ("cover"/"center" shows a normal photo).
     photo: { src: "images/couple.webp", zoom: "360%", x: "65%", y: "40%" },
-    parents: ["Mr. Giri Raj Regmi", "Mrs. Sarita Regmi"],
+    parents: ["Mr. Giri Raj Regmi", "Mrs. Sarita Khaniya"],
+    invite: "Cordially request the honour of your presence to celebrate the auspicious union of their beloved son.",
     home: "Imadol, Lalitpur",
   },
 
@@ -18,7 +19,8 @@ window.WEDDING = {
     name: "Dr. Prashamsa Parajuli",
     shortName: "Prashamsa",
     photo: { src: "images/couple.webp", zoom: "380%", x: "33%", y: "43%" },
-    parents: ["Mr. Phanindra Prasad Parajuli", "Mrs. Yasoda Parajuli"],
+    parents: ["Mr. Phanindra Prasad Parajuli", "Mrs. Yasoda Devi Nepal"],
+    invite: "Seek your blessings and gracious presence as their beloved daughter embarks on this sacred lifelong journey.",
     home: "Naya Thimi, Bhaktapur",
   },
 
@@ -29,11 +31,18 @@ window.WEDDING = {
     nepali: "॥ श्री गणेशाय नमः ॥",
     english: "With the blessings of Lord Ganesha",
     message: "We joyfully announce the wedding of our children",
+    // Shown in the footer.
+    closing: "With immense joy and the blessings of our beloved families, we invite you to join us as we celebrate the wedding of Dr. Siddhartha Regmi and Dr. Prashamsa Parajuli.",
+    signoff: "Regmi & Parajuli Families",
   },
 
-  // The reception. Times are Nepal time (UTC+05:45).
-  reception: {
-    title: "Wedding Reception",
+  // The wedding ceremony (the bride's side hosts only this; the reception is hosted by the groom's family).
+  // Times are Nepal time (UTC+05:45).
+  ceremony: {
+    title: "Wedding Ceremony",
+    subtitle: "शुभ विवाह संस्कार",
+    description: "The sacred Vedic Vivaha ceremony joining two souls and two families in eternal love and commitment.",
+    nepaliDate: "मंसिर २०, २०८३",
     start: "2026-12-05T10:00:00+05:45",
     end: "2026-12-05T14:00:00+05:45", // used for calendar invites only
     weekday: "Saturday",
@@ -41,6 +50,7 @@ window.WEDDING = {
     month: "December",
     year: "2026",
     time: "10:00 AM",
+    timeLabel: "Auspicious Lagna",
     venue: "Golden Palace",
     address: "Gankhu, Bhaktapur",
     // Link used by the "Get Directions" button — the venue's exact Google Maps pin.
