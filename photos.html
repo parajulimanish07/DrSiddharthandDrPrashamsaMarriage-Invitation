@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Share Your Photos — Siddhartha & Prashamsa</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#6b1020" />
+  <link rel="stylesheet" href="assets/fonts.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="photos-page">
+  <header class="photos-head">
+    <p class="devanagari">शुभ विवाह</p>
+    <h1 class="section-title">Share Your Moments</h1>
+    <p>Take a photo or pick some from your gallery. Everything lands in one shared album for the couple.</p>
+  </header>
+
+  <main>
+    <div class="upload-card" id="uploadCard" hidden>
+      <input type="text" id="guestName" placeholder="Your name (optional)" aria-label="Your name (optional)" maxlength="40" autocomplete="name" />
+      <label class="btn" for="cameraInput">Take a Photo</label>
+      <label class="btn btn-outline" for="galleryInput">Choose from Gallery</label>
+      <input type="file" id="cameraInput" accept="image/*" capture="environment" />
+      <input type="file" id="galleryInput" accept="image/*" multiple />
+      <p class="upload-status" id="uploadStatus" role="status"></p>
+    </div>
+    <p class="photos-empty" id="noBackend" hidden>Photo sharing isn't available right now.</p>
+
+    <h2 class="photos-title" id="albumTitle" hidden>The Album</h2>
+    <div class="photo-grid" id="photoGrid"></div>
+  </main>
+
+  <a class="back-link" href="./">← Back to the invitation</a>
+
+  <script src="config.js"></script>
+  <script src="photos.js"></script>
+</body>
+</html>

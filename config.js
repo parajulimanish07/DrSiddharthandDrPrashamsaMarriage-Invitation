@@ -67,6 +67,10 @@ window.WEDDING = {
    */
   backendUrl: "https://script.google.com/macros/s/AKfycbx0UGmp96n7vyAlprx8XM6YkUanv3Ym09-EcnMy4_wjAqSBQ8TTX7JdeX1cz33nMOI/exec",
 
+  // Page guests open by scanning the QR code, to share photos from the event.
+  // Needs backendUrl to be set (see docs/GUESTBOOK_SETUP.md). Leave "" to hide the section.
+  photosPage: "photos.html",
+
   closingLine: "Your presence would be the greatest gift we could receive!",
   hashtag: "#SiddharthaWedsPrashamsa",
 

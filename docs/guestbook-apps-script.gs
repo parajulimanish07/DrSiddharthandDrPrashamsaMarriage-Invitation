@@ -3,6 +3,9 @@
  * Setup steps: see docs/GUESTBOOK_SETUP.md
  */
 const MAX_WISHES = 100;
+const MAX_PHOTOS = 300;
+const MAX_PHOTO_BASE64 = 8 * 1024 * 1024; // ~6 MB image; the site sends ~0.5 MB
+const PHOTO_FOLDER = "Wedding Guest Photos";
 
 function sheet_(name, headers) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -25,8 +28,30 @@ function clean_(value, max) {
   return /^[=+\-@]/.test(text) ? "'" + text : text;
 }
 
+// The Drive folder guests' photos go into. Created on first use; anyone with the link can view it.
+function photoFolder_() {
+  const found = DriveApp.getFoldersByName(PHOTO_FOLDER);
+  if (found.hasNext()) return found.next();
+  const folder = DriveApp.createFolder(PHOTO_FOLDER);
+  folder.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  return folder;
+}
+
+// GET ?type=photos → ids of the latest guest photos, newest first
+function listPhotos_() {
+  const files = photoFolder_().getFiles();
+  const photos = [];
+  while (files.hasNext()) {
+    const f = files.next();
+    photos.push({ id: f.getId(), t: f.getDateCreated().getTime() });
+  }
+  photos.sort((a, b) => b.t - a.t);
+  return json_({ ok: true, photos: photos.slice(0, MAX_PHOTOS).map((p) => p.id) });
+}
+
 // GET ?type=wishes → latest wishes, newest first
 function doGet(e) {
+  if (e.parameter.type === "photos") return listPhotos_();
   if (e.parameter.type !== "wishes") return json_({ ok: false, error: "Unknown request" });
   const rows = sheet_("Wishes", ["Timestamp", "Name", "Message", "Anonymous"]).getDataRange().getValues().slice(1);
   const wishes = rows
@@ -54,6 +79,16 @@ function doPost(e) {
       new Date(), name, clean_(data.phone, 30), clean_(data.attending, 5), clean_(data.guests, 3),
     ]);
     return json_({ ok: true });
+  }
+
+  if (data.type === "photo") {
+    const image = String(data.image || "");
+    if (!image || image.length > MAX_PHOTO_BASE64) return json_({ ok: false, error: "Photo missing or too large" });
+    const stamp = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd_HH-mm-ss");
+    const who = name ? name.replace(/[^\w\- ]+/g, "").trim() : "guest";
+    const blob = Utilities.newBlob(Utilities.base64Decode(image), "image/jpeg", `${stamp}_${who}.jpg`);
+    const file = photoFolder_().createFile(blob);
+    return json_({ ok: true, id: file.getId() });
   }
 
   if (data.type === "wish") {

@@ -144,6 +144,10 @@
 
   // ── RSVP + Guestbook (Google Sheets backend) ────
   if (W.backendUrl) {
+    if (W.photosPage) {
+      $("#sharePhotos").hidden = false;
+      $("#photosBtn").href = W.photosPage;
+    }
     $("#rsvp").hidden = false;
     $("#guestbook").hidden = false;
 

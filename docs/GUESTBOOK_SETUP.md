@@ -22,3 +22,22 @@ is recorded in the sheet as "Anonymous" (column D marks it as such), and the sit
 
 If you edit the script later, use **Deploy → Manage deployments → Edit → New version**
 so the same URL keeps working.
+
+## Guest photo sharing (QR code)
+
+Guests scan the QR code (`images/qr-photos.svg`, shown in the "Share Your Moments" section and printable
+for tables), land on `photos.html`, and take or pick photos. Each photo is shrunk on their phone and saved
+to a Google Drive folder called **Wedding Guest Photos** in the Google account that owns the script.
+`photos.html` also shows everything uploaded so far.
+
+1. Re-paste `docs/guestbook-apps-script.gs` into the Apps Script project and save.
+2. **Deploy → Manage deployments → Edit → New version → Deploy.** The first time, Google asks you to
+   approve a new permission (Drive access). Click through *Advanced → Go to project*.
+3. Open `photos.html` once and upload a test photo. That creates the Drive folder.
+
+After the event, open **drive.google.com → Wedding Guest Photos** and download the whole folder.
+Files are named `date_time_guestname.jpg`. The folder is "anyone with the link can view", which is how
+the album page can show thumbnails; the link is not guessable, but don't post it publicly.
+
+To print the QR code, use `images/qr-photos.png` (high resolution). If you ever change the site's address,
+the QR code must be regenerated.
