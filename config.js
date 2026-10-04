@@ -10,7 +10,7 @@ window.WEDDING = {
     shortName: "Siddhartha",
     // Portrait: any photo. zoom/x/y crop into it ("cover"/"center" shows a normal photo).
     photo: { src: "images/couple.webp", zoom: "360%", x: "65%", y: "40%" },
-    parents: ["Mr. Giri Raj Regmi", "Mrs. Sarita Khaniya"],
+    parents: ["Mr. Giri Raj Regmi", "Mrs. Sarita Regmi"],
     invite: "Cordially request the honour of your presence to celebrate the auspicious union of their beloved son.",
     home: "Imadol, Lalitpur",
   },
@@ -19,7 +19,7 @@ window.WEDDING = {
     name: "Dr. Prashamsa Parajuli",
     shortName: "Prashamsa",
     photo: { src: "images/couple.webp", zoom: "380%", x: "33%", y: "43%" },
-    parents: ["Mr. Phanindra Prasad Parajuli", "Mrs. Yasoda Devi Nepal"],
+    parents: ["Mr. Phanindra Prasad Parajuli", "Mrs. Yasoda Parajuli"],
     invite: "Seek your blessings and gracious presence as their beloved daughter embarks on this sacred lifelong journey.",
     home: "Naya Thimi, Bhaktapur",
   },
