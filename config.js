@@ -65,7 +65,7 @@ window.WEDDING = {
    * free Google Sheet. Follow the steps in docs/GUESTBOOK_SETUP.md and paste the
    * Web App URL here. Until then the RSVP and Guestbook sections stay hidden.
    */
-  backendUrl: "https://script.google.com/macros/s/AKfycbx0UGmp96n7vyAlprx8XM6YkUanv3Ym09-EcnMy4_wjAqSBQ8TTX7JdeX1cz33nMOI/exec",
+  backendUrl: "https://script.google.com/macros/s/AKfycbybzmOqtuV5Hl8My1U6tEE8TmiLtWChH9D-Dhb9iI56PYrZLwJuCQaGXLlDO7Yol3Qb/exec",
 
   // Page guests open by scanning the QR code, to share photos from the event.
   // Needs backendUrl to be set (see docs/GUESTBOOK_SETUP.md). Leave "" to hide the section.
