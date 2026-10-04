@@ -20,6 +20,7 @@
     brideInitial: W.bride.shortName.charAt(0),
     coupleShort: `${W.groom.shortName} & ${W.bride.shortName}`,
     blessingNepali: W.blessing.nepali,
+    blessingEnglish: W.blessing.english,
     blessingMessage: W.blessing.message,
     dateLine: `${R.weekday} · ${Number(R.day)} ${R.month} ${R.year}`,
     time: R.time,
@@ -113,26 +114,6 @@
     $("#mapWrap").hidden = false;
   }
 
-  // ── Gallery + lightbox ──────────────────────────
-  const grid = $("#galleryGrid");
-  const gallerySection = $("#gallery");
-  const lightbox = $("#lightbox");
-  gallerySection.hidden = true; // shown once at least one photo loads
-  W.gallery.forEach((src) => {
-    const img = el("img", { src, alt: "Photo of the couple", loading: "lazy" });
-    img.addEventListener("load", () => { gallerySection.hidden = false; });
-    img.addEventListener("error", () => img.remove());
-    img.addEventListener("click", () => {
-      lightbox.querySelector("img").src = src;
-      lightbox.hidden = false;
-    });
-    grid.append(img);
-  });
-  lightbox.addEventListener("click", (e) => {
-    if (e.target.tagName !== "IMG") lightbox.hidden = true;
-  });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") lightbox.hidden = true; });
-
   // ── Countdown ───────────────────────────────────
   const target = eventDate.getTime();
   const pad = (n) => String(n).padStart(2, "0");
@@ -181,6 +162,14 @@
         button.disabled = false;
       }
     };
+
+    const attending = $("#rsvpAttending");
+    const guests = $("#rsvpGuests");
+    attending.addEventListener("change", () => {
+      const coming = attending.value === "yes";
+      guests.hidden = !coming;
+      guests.disabled = !coming;
+    });
 
     $("#rsvpForm").addEventListener("submit", (e) => {
       e.preventDefault();
@@ -237,8 +226,16 @@
       if (audio.paused) audio.play().catch(() => {});
       else audio.pause();
     });
-    audio.addEventListener("play", () => musicBtn.classList.add("playing"));
-    audio.addEventListener("pause", () => musicBtn.classList.remove("playing"));
+    const syncMusicBtn = () => {
+      const on = !audio.paused;
+      musicBtn.classList.toggle("playing", on);
+      musicBtn.classList.toggle("muted", !on);
+      musicBtn.setAttribute("aria-pressed", String(on));
+      musicBtn.setAttribute("aria-label", on ? "Pause music" : "Play music");
+    };
+    audio.addEventListener("play", syncMusicBtn);
+    audio.addEventListener("pause", syncMusicBtn);
+    syncMusicBtn();
     if (W.musicCredit) {
       const credit = $("#musicCredit");
       credit.textContent = `Music: ${W.musicCredit}`;

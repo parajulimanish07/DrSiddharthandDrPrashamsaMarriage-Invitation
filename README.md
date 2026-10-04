@@ -14,8 +14,6 @@ All text, dates, venue and family names live in **`config.js`**. Edit that file 
 - The groom and bride portraits are crops of the same illustration. To use real photos, add them to
   `images/` and set `photo: { src: "images/groom.jpg" }` in `config.js`. Leaving out `zoom`, `x` and `y`
   shows the whole photo.
-- The "Moments" gallery shows `images/gallery/1.jpg` … `6.jpg`. Missing files are skipped, and the
-  section stays hidden until at least one photo exists.
 
 Fonts are self-hosted in `assets/fonts/`, so the page doesn't depend on Google Fonts at runtime.
 

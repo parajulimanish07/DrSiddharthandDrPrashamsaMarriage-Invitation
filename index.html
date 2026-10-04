@@ -10,14 +10,16 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://parajulimanish07.github.io/DrSiddharthandDrPrashamsaMarriage-Invitation/" />
   <meta property="og:image" content="https://parajulimanish07.github.io/DrSiddharthandDrPrashamsaMarriage-Invitation/images/og.jpg" />
-  <meta property="og:image:width" content="572" />
-  <meta property="og:image:height" content="1024" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://parajulimanish07.github.io/DrSiddharthandDrPrashamsaMarriage-Invitation/images/og.jpg" />
   <meta name="theme-color" content="#6b1020" />
   <link rel="stylesheet" href="assets/fonts.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="locked">
+  <noscript><p class="noscript">Please enable JavaScript to view this invitation.</p></noscript>
 
   <!-- Opening cover -->
   <div id="cover" class="cover">
@@ -25,13 +27,13 @@
       <p class="devanagari cover-top">शुभ विवाह</p>
       <div class="monogram"><span data-bind="groomInitial"></span><em>&amp;</em><span data-bind="brideInitial"></span></div>
       <p class="cover-sub">The wedding of</p>
-      <h1 class="script"><span data-bind="groomShort"></span> &amp; <span data-bind="brideShort"></span></h1>
+      <p class="script cover-names"><span data-bind="groomShort"></span> &amp; <span data-bind="brideShort"></span></p>
       <button id="openBtn" class="btn">Open Invitation</button>
     </div>
   </div>
   <div id="petals" class="petals-overlay" aria-hidden="true"></div>
 
-  <button id="musicBtn" class="music-btn" aria-label="Toggle music" hidden>♪</button>
+  <button id="musicBtn" class="music-btn" aria-label="Play music" aria-pressed="false" hidden><span class="note">♪</span></button>
   <audio id="bgMusic" loop></audio>
 
   <main>
@@ -45,12 +47,14 @@
       </div>
       <div class="hero-content reveal">
         <p class="devanagari blessing-np" data-bind="blessingNepali"></p>
-        <p class="eyebrow">The wedding of</p>
-        <h1 class="script names">
+        <p class="blessing-en" data-bind="blessingEnglish"></p>
+        <p class="eyebrow">Together with their families</p>
+        <h1 class="names">
           <span data-bind="groomName"></span>
           <span class="amp">&amp;</span>
           <span data-bind="brideName"></span>
         </h1>
+        <p class="invite-line">invite you to celebrate their wedding</p>
         <p class="date-line" data-bind="dateLine"></p>
       </div>
       <a href="#families" class="scroll-hint" aria-label="Scroll down">⌄</a>
@@ -129,23 +133,18 @@
       <a class="btn reveal" id="directionsBtn" target="_blank" rel="noopener">Get Directions</a>
     </section>
 
-    <!-- Gallery -->
-    <section class="section gallery-section" id="gallery">
-      <h2 class="section-title reveal">Moments</h2>
-      <div class="gallery" id="galleryGrid"></div>
-    </section>
-
     <!-- RSVP -->
     <section class="section rsvp" id="rsvp" hidden>
       <h2 class="section-title reveal">Confirm Attendance</h2>
       <form class="card-form reveal" id="rsvpForm">
-        <input name="name" placeholder="Your name*" required maxlength="80" />
-        <input name="phone" placeholder="Phone number" maxlength="30" />
-        <select name="attending" required>
+        <input name="name" placeholder="Your name*" aria-label="Your name" autocomplete="name" required maxlength="80" />
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input name="phone" type="tel" placeholder="Phone number" aria-label="Phone number" autocomplete="tel" maxlength="30" />
+        <select name="attending" id="rsvpAttending" aria-label="Attendance" required>
           <option value="yes">Joyfully attending</option>
           <option value="no">Regretfully can't attend</option>
         </select>
-        <select name="guests">
+        <select name="guests" id="rsvpGuests" aria-label="Number of guests">
           <option value="1">1 guest</option>
           <option value="2">2 guests</option>
           <option value="3">3 guests</option>
@@ -161,12 +160,13 @@
     <section class="section guestbook" id="guestbook" hidden>
       <h2 class="section-title reveal">Guestbook</h2>
       <form class="card-form reveal" id="wishForm">
-        <input name="name" id="wishName" placeholder="Enter your name*" required maxlength="80" />
+        <input name="name" id="wishName" placeholder="Enter your name*" aria-label="Your name" autocomplete="name" required maxlength="80" />
         <label class="checkbox-field">
           <input type="checkbox" name="anonymous" id="wishAnonymous" />
           Send this blessing anonymously
         </label>
-        <textarea name="message" placeholder="Enter your wishes*" required maxlength="600" rows="4"></textarea>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <textarea name="message" aria-label="Your wishes" placeholder="Enter your wishes*" required maxlength="600" rows="4"></textarea>
         <button class="btn" type="submit">Send Wishes</button>
         <p class="form-status" role="status"></p>
       </form>
@@ -180,12 +180,6 @@
     <p class="hashtag" data-bind="hashtag"></p>
     <p class="music-credit" id="musicCredit" hidden></p>
   </footer>
-
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox" hidden>
-    <button class="lb-close" aria-label="Close">×</button>
-    <img alt="" />
-  </div>
 
   <script src="config.js"></script>
   <script src="script.js"></script>

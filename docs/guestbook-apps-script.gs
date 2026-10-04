@@ -19,8 +19,10 @@ function json_(obj) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+// Trims, caps length, and defuses spreadsheet formulas (=, +, -, @ at the start).
 function clean_(value, max) {
-  return String(value || "").trim().slice(0, max);
+  const text = String(value || "").trim().slice(0, max);
+  return /^[=+\-@]/.test(text) ? "'" + text : text;
 }
 
 // GET ?type=wishes → latest wishes, newest first
@@ -42,6 +44,8 @@ function doPost(e) {
   } catch (err) {
     return json_({ ok: false, error: "Bad request" });
   }
+  // Hidden "website" field: humans leave it empty, bots fill it. Pretend success.
+  if (data.website) return json_({ ok: true });
   const name = clean_(data.name, 80);
 
   if (data.type === "rsvp") {

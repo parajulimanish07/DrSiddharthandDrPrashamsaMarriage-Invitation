@@ -17,7 +17,7 @@ window.WEDDING = {
   bride: {
     name: "Dr. Prashamsa Parajuli",
     shortName: "Prashamsa",
-    photo: { src: "images/couple.webp", zoom: "360%", x: "39%", y: "43%" },
+    photo: { src: "images/couple.webp", zoom: "380%", x: "33%", y: "43%" },
     parents: ["Mr. Phanindra Prasad Parajuli", "Mrs. Yasoda Parajuli"],
     home: "Naya Thimi, Bhaktapur",
   },
@@ -27,6 +27,7 @@ window.WEDDING = {
 
   blessing: {
     nepali: "॥ श्री गणेशाय नमः ॥",
+    english: "With the blessings of Lord Ganesha",
     message: "We joyfully announce the wedding of our children",
   },
 
@@ -47,12 +48,6 @@ window.WEDDING = {
     // Google Maps embed centered on the exact pin above. Leave "" to hide.
     mapEmbedUrl: "https://maps.google.com/maps?q=27.6845405,85.3963109&z=17&output=embed",
   },
-
-  // Photos placed in images/gallery/. Missing files are skipped automatically.
-  // TEMP: reusing the couple illustration as a placeholder until real photos are added.
-  gallery: [
-    "images/couple.webp",
-  ],
 
   /*
    * RSVP + Guestbook backend.
