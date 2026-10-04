@@ -1,5 +1,6 @@
 (function () {
   const W = window.WEDDING;
+  const L = window.LANG;
   const $ = (sel) => document.querySelector(sel);
   const MAX_SIDE = 1600;
 
@@ -38,7 +39,8 @@
     link.rel = "noopener";
     const img = document.createElement("img");
     img.src = `https://drive.google.com/thumbnail?id=${id}&sz=w400`;
-    img.alt = "Photo shared by a guest";
+    img.alt = L.t("guestPhotoAlt");
+    img.dataset.i18nAlt = "guestPhotoAlt";
     img.loading = "lazy";
     link.append(img);
     grid.querySelector(".photos-empty")?.remove();
@@ -49,7 +51,7 @@
     const list = [...files];
     let done = 0;
     for (const file of list) {
-      status.textContent = `Uploading ${done + 1} of ${list.length}…`;
+      status.textContent = L.t("uploading", { n: done + 1, total: list.length });
       try {
         const image = await toJpegBase64(file);
         const res = await fetch(W.backendUrl, {
@@ -62,11 +64,11 @@
         addThumb(json.id, true);
         done++;
       } catch (err) {
-        status.textContent = "Sorry, a photo didn't go through. Please try again.";
+        status.textContent = L.t("photoFailed");
         return;
       }
     }
-    status.textContent = done === 1 ? "Thank you! Your photo was added." : `Thank you! ${done} photos were added.`;
+    status.textContent = done === 1 ? L.t("thanksOnePhoto") : L.t("thanksPhotos", { n: done });
   };
 
   ["#cameraInput", "#galleryInput"].forEach((sel) => {
@@ -87,7 +89,8 @@
       if (!grid.children.length) {
         const p = document.createElement("p");
         p.className = "photos-empty";
-        p.textContent = "No photos yet. Be the first to share one!";
+        p.dataset.i18n = "noPhotos";
+        p.textContent = L.t("noPhotos");
         grid.append(p);
       }
     });

@@ -1,6 +1,6 @@
 (function () {
   const W = window.WEDDING;
-  const R = W.ceremony;
+  const L = window.LANG;
   const $ = (sel) => document.querySelector(sel);
 
   const el = (tag, attrs = {}, text) => {
@@ -10,49 +10,134 @@
     return node;
   };
 
-  // ── Text bindings ───────────────────────────────
-  const bindings = {
-    groomName: W.groom.name,
-    brideName: W.bride.name,
-    groomShort: W.groom.shortName,
-    brideShort: W.bride.shortName,
-    groomInitial: W.groom.shortName.charAt(0),
-    brideInitial: W.bride.shortName.charAt(0),
-    coupleShort: `${W.groom.shortName} & ${W.bride.shortName}`,
-    blessingNepali: W.blessing.nepali,
-    blessingEnglish: W.blessing.english,
-    blessingMessage: W.blessing.message,
-    dateLine: `${R.weekday} · ${Number(R.day)} ${R.month} ${R.year}`,
-    time: R.time,
-    timeLabel: R.timeLabel,
-    ceremonyTitle: R.title,
-    ceremonySubtitle: R.subtitle,
-    ceremonyDescription: R.description,
-    nepaliDate: R.nepaliDate,
-    blessingClosing: W.blessing.closing,
-    blessingSignoff: W.blessing.signoff,
-    weekday: R.weekday,
-    day: R.day,
-    monthYear: `${R.month} ${R.year}`,
-    venue: R.venue,
-    address: R.address,
-    venueFull: `${R.venue}, ${R.address}`,
-    closingLine: W.closingLine,
-    hashtag: W.hashtag,
+  // Content in the current language: config.js with the `ne` block laid over it when Nepali is chosen.
+  const merge = (base, over) => {
+    if (Array.isArray(over) || typeof over !== "object" || over === null) return over;
+    const out = { ...base };
+    Object.keys(over).forEach((k) => { out[k] = merge(base ? base[k] : undefined, over[k]); });
+    return out;
   };
-  document.querySelectorAll("[data-bind]").forEach((node) => {
-    node.textContent = bindings[node.dataset.bind] || "";
-  });
+  const content = () => (L.get() === "ne" && W.ne ? merge(W, W.ne) : W);
+  const firstLetter = (text) => {
+    const first = typeof Intl !== "undefined" && Intl.Segmenter
+      ? [...new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(text)][0]
+      : null;
+    return first ? first.segment : text.charAt(0);
+  };
 
-  // ── Families ────────────────────────────────────
-  const renderFamily = (box, person) => {
-    box.append(el("p", { class: "eyebrow" }, "With the blessings of"));
-    person.parents.forEach((p) => box.append(el("p", { class: "parent-name" }, p.replace(/^(Mr|Mrs)\.\s*/, ""))));
-    box.append(el("p", { class: "home" }, person.home));
-    box.append(el("p", { class: "family-invite" }, person.invite));
+  // The date itself never changes, so calendar maths always uses the English config.
+  const E = W.ceremony;
+  const eventDate = new Date(E.start);
+  const year = Number(E.year);
+  const monthIdx = new Date(`${E.month} 1, ${year}`).getMonth();
+  const dayNum = Number(E.day);
+  const toUtcStamp = (iso) => new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const icsEscape = (text) => text.replace(/([,;\\])/g, "\\$1");
+
+  let C = content();
+  let calTitle = "";
+  let details = "";
+  let location = "";
+
+  // ── Everything that depends on the language ─────
+  const render = () => {
+    C = content();
+    const R = C.ceremony;
+
+    const bindings = {
+      groomName: C.groom.name,
+      brideName: C.bride.name,
+      groomShort: C.groom.shortName,
+      brideShort: C.bride.shortName,
+      groomInitial: firstLetter(C.groom.shortName),
+      brideInitial: firstLetter(C.bride.shortName),
+      coupleShort: `${C.groom.shortName} & ${C.bride.shortName}`,
+      blessingNepali: C.blessing.nepali,
+      blessingEnglish: C.blessing.english,
+      blessingMessage: C.blessing.message,
+      blessingClosing: C.blessing.closing,
+      blessingSignoff: C.blessing.signoff,
+      dateLine: `${R.weekday} · ${L.num(Number(R.day))} ${R.month} ${L.num(R.year)}`,
+      time: R.time,
+      timeLabel: R.timeLabel,
+      ceremonySubtitle: R.subtitle,
+      ceremonyDescription: R.description,
+      nepaliDate: R.nepaliDate,
+      weekday: R.weekday,
+      day: L.num(R.day),
+      monthYear: `${R.month} ${L.num(R.year)}`,
+      venue: R.venue,
+      address: R.address,
+      venueFull: `${R.venue}, ${R.address}`,
+      closingLine: C.closingLine,
+      hashtag: C.hashtag,
+    };
+    document.querySelectorAll("[data-bind]").forEach((node) => {
+      node.textContent = bindings[node.dataset.bind] || "";
+    });
+
+    // Families
+    [["#groomFamily", C.groom], ["#brideFamily", C.bride]].forEach(([sel, person]) => {
+      const box = $(sel);
+      box.replaceChildren(el("p", { class: "eyebrow" }, L.t("withBlessings")));
+      person.parents.forEach((p) => box.append(el("p", { class: "parent-name" }, p.replace(/^(Mr|Mrs)\.\s*/, ""))));
+      box.append(el("p", { class: "home" }, person.home), el("p", { class: "family-invite" }, person.invite));
+    });
+    document.querySelectorAll("[data-portrait]").forEach((box) => {
+      box.setAttribute("aria-label", C[box.dataset.portrait].name);
+    });
+
+    // Calendar
+    $("#calTitle").textContent = `${R.month} ${L.num(year)}`;
+    const calGrid = $("#calGrid");
+    calGrid.replaceChildren();
+    const dows = C.weekdaysShort || ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+    dows.forEach((d) => calGrid.append(el("span", { class: "dow" }, d)));
+    const firstDow = (new Date(year, monthIdx, 1).getDay() + 6) % 7; // Monday first
+    const daysInMonth = new Date(year, monthIdx + 1, 0).getDate();
+    for (let i = 0; i < firstDow; i++) calGrid.append(el("span"));
+    for (let d = 1; d <= daysInMonth; d++) {
+      calGrid.append(el("span", d === dayNum ? { class: "day wedding-day", title: R.title } : { class: "day" }, L.num(d)));
+    }
+
+    // Add to calendar
+    calTitle = `${C.groom.shortName} & ${C.bride.shortName} — ${R.title}`;
+    location = `${R.venue}, ${R.address}`;
+    details = `${C.groom.name} & ${C.bride.name}. ${location}.`;
+    $("#gcalBtn").href =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      `&text=${encodeURIComponent(calTitle)}` +
+      `&dates=${toUtcStamp(E.start)}/${toUtcStamp(E.end)}` +
+      `&details=${encodeURIComponent(details)}` +
+      `&location=${encodeURIComponent(location)}`;
+
+    // Forms, countdown and music button
+    syncAnonymous();
+    renderWishes();
+    tick();
+    syncMusicBtn();
   };
-  renderFamily($("#groomFamily"), W.groom);
-  renderFamily($("#brideFamily"), W.bride);
+
+  $("#icsBtn").addEventListener("click", () => {
+    const ics = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Wedding Invitation//EN",
+      "BEGIN:VEVENT",
+      `UID:${toUtcStamp(E.start)}-siddhartha-prashamsa@invitation`,
+      `DTSTAMP:${toUtcStamp(new Date().toISOString())}`,
+      `DTSTART:${toUtcStamp(E.start)}`,
+      `DTEND:${toUtcStamp(E.end)}`,
+      `SUMMARY:${icsEscape(calTitle)}`,
+      `DESCRIPTION:${icsEscape(details)}`,
+      `LOCATION:${icsEscape(location)}`,
+      "END:VEVENT", "END:VCALENDAR",
+    ].join("\r\n");
+    const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+    const a = el("a", { href: url, download: "siddhartha-prashamsa-wedding.ics" });
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
 
   // ── Images ──────────────────────────────────────
   document.querySelectorAll("[data-portrait]").forEach((box) => {
@@ -68,81 +153,57 @@
     $(".hero-bg").style.backgroundImage = url;
   }
 
-  // ── Calendar ────────────────────────────────────
-  const eventDate = new Date(R.start);
-  const year = Number(R.year);
-  const monthIdx = new Date(`${R.month} 1, ${year}`).getMonth();
-  const dayNum = Number(R.day);
-  $("#calTitle").textContent = `${R.month} ${year}`;
-  const calGrid = $("#calGrid");
-  ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].forEach((d) => calGrid.append(el("span", { class: "dow" }, d)));
-  const firstDow = (new Date(year, monthIdx, 1).getDay() + 6) % 7; // Monday first
-  const daysInMonth = new Date(year, monthIdx + 1, 0).getDate();
-  for (let i = 0; i < firstDow; i++) calGrid.append(el("span"));
-  for (let d = 1; d <= daysInMonth; d++) {
-    calGrid.append(el("span", d === dayNum ? { class: "day wedding-day", title: "Wedding Ceremony" } : { class: "day" }, String(d)));
-  }
-
-  // Add to calendar
-  const toUtcStamp = (iso) => new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-  const calTitle = `${W.groom.shortName} & ${W.bride.shortName} — ${R.title}`;
-  const location = `${R.venue}, ${R.address}`;
-  const details = `The wedding of ${W.groom.name} & ${W.bride.name}. ${location}.`;
-  $("#gcalBtn").href =
-    "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-    `&text=${encodeURIComponent(calTitle)}` +
-    `&dates=${toUtcStamp(R.start)}/${toUtcStamp(R.end)}` +
-    `&details=${encodeURIComponent(details)}` +
-    `&location=${encodeURIComponent(location)}`;
-  $("#icsBtn").addEventListener("click", () => {
-    const ics = [
-      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Wedding Invitation//EN",
-      "BEGIN:VEVENT",
-      `UID:${toUtcStamp(R.start)}-siddhartha-prashamsa@invitation`,
-      `DTSTAMP:${toUtcStamp(new Date().toISOString())}`,
-      `DTSTART:${toUtcStamp(R.start)}`,
-      `DTEND:${toUtcStamp(R.end)}`,
-      `SUMMARY:${calTitle}`,
-      `DESCRIPTION:${details}`,
-      `LOCATION:${location.replace(/,/g, "\\,")}`,
-      "END:VEVENT", "END:VCALENDAR",
-    ].join("\r\n");
-    const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
-    const a = el("a", { href: url, download: "siddhartha-prashamsa-wedding.ics" });
-    document.body.append(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-  });
-
   // ── Venue ───────────────────────────────────────
-  $("#directionsBtn").href = R.mapUrl;
-  if (R.mapEmbedUrl) {
-    $("#mapFrame").src = R.mapEmbedUrl;
+  $("#directionsBtn").href = E.mapUrl;
+  if (E.mapEmbedUrl) {
+    $("#mapFrame").src = E.mapEmbedUrl;
     $("#mapWrap").hidden = false;
   }
 
   // ── Countdown ───────────────────────────────────
   const target = eventDate.getTime();
   const pad = (n) => String(n).padStart(2, "0");
+  let timer = null;
   const tick = () => {
     const diff = target - Date.now();
     if (isNaN(diff) || diff <= 0) {
       $("#countdown").hidden = true;
       $("#countdownDone").hidden = false;
-      return false;
+      clearInterval(timer);
+      return;
     }
-    $("#cd-days").textContent = Math.floor(diff / 86400000);
-    $("#cd-hours").textContent = pad(Math.floor((diff / 3600000) % 24));
-    $("#cd-mins").textContent = pad(Math.floor((diff / 60000) % 60));
-    $("#cd-secs").textContent = pad(Math.floor((diff / 1000) % 60));
-    return true;
+    $("#cd-days").textContent = L.num(Math.floor(diff / 86400000));
+    $("#cd-hours").textContent = L.num(pad(Math.floor((diff / 3600000) % 24)));
+    $("#cd-mins").textContent = L.num(pad(Math.floor((diff / 60000) % 60)));
+    $("#cd-secs").textContent = L.num(pad(Math.floor((diff / 1000) % 60)));
   };
-  if (tick()) {
-    const timer = setInterval(() => { if (!tick()) clearInterval(timer); }, 1000);
-  }
+  timer = setInterval(tick, 1000);
 
   // ── RSVP + Guestbook (Google Sheets backend) ────
+  const wishName = $("#wishName");
+  const wishAnonymous = $("#wishAnonymous");
+  const wishList = $("#wishList");
+  let wishes = null; // null until the first load finishes
+
+  const syncAnonymous = () => {
+    wishName.required = !wishAnonymous.checked;
+    wishName.disabled = wishAnonymous.checked;
+    wishName.placeholder = L.t(wishAnonymous.checked ? "nameHidden" : "enterName");
+  };
+  const renderWishes = () => {
+    if (wishes === null) return;
+    wishList.replaceChildren();
+    if (!wishes.length) {
+      wishList.append(el("p", { class: "no-wishes" }, L.t("noWishes")));
+      return;
+    }
+    wishes.forEach((w) => {
+      const card = el("blockquote", { class: "wish" });
+      card.append(el("p", {}, w.message), el("cite", {}, `— ${w.name === "A well-wisher" ? L.t("wellWisher") : w.name}`));
+      wishList.append(card);
+    });
+  };
+
   if (W.backendUrl) {
     if (W.photosPage) {
       $("#sharePhotos").hidden = false;
@@ -156,7 +217,7 @@
       const button = form.querySelector("button");
       const data = Object.fromEntries(new FormData(form));
       button.disabled = true;
-      status.textContent = "Sending…";
+      status.textContent = L.t("sending");
       try {
         // text/plain avoids a CORS preflight, which Apps Script can't answer.
         const res = await fetch(W.backendUrl, {
@@ -167,9 +228,10 @@
         const json = await res.json();
         if (!json.ok) throw new Error(json.error || "Failed");
         form.reset();
+        syncAnonymous();
         onDone(status, data);
       } catch (err) {
-        status.textContent = "Sorry, that didn't go through. Please try again.";
+        status.textContent = L.t("failed");
       } finally {
         button.disabled = false;
       }
@@ -186,44 +248,24 @@
     $("#rsvpForm").addEventListener("submit", (e) => {
       e.preventDefault();
       send(e.target, "rsvp", (status, data) => {
-        status.textContent = data.attending === "yes"
-          ? `Thank you, ${data.name}! We can't wait to celebrate with you.`
-          : `Thank you, ${data.name}. You'll be missed!`;
+        status.textContent = L.t(data.attending === "yes" ? "thanksYes" : "thanksNo", { name: data.name });
       });
     });
 
-    const wishName = $("#wishName");
-    const wishAnonymous = $("#wishAnonymous");
-    wishAnonymous.addEventListener("change", () => {
-      wishName.required = !wishAnonymous.checked;
-      wishName.disabled = wishAnonymous.checked;
-      wishName.placeholder = wishAnonymous.checked ? "Name hidden" : "Enter your name*";
-    });
+    wishAnonymous.addEventListener("change", syncAnonymous);
 
-    const wishList = $("#wishList");
-    const renderWishes = (wishes) => {
-      wishList.replaceChildren();
-      if (!wishes.length) {
-        wishList.append(el("p", { class: "no-wishes" }, "No wishes yet. Be the first!"));
-        return;
-      }
-      wishes.forEach((w) => {
-        const card = el("blockquote", { class: "wish" });
-        card.append(el("p", {}, w.message), el("cite", {}, `— ${w.name}`));
-        wishList.append(card);
-      });
-    };
     const loadWishes = () =>
       fetch(`${W.backendUrl}?type=wishes`)
         .then((r) => r.json())
-        .then((json) => renderWishes(json.wishes || []))
-        .catch(() => renderWishes([]));
+        .then((json) => { wishes = json.wishes || []; })
+        .catch(() => { wishes = []; })
+        .then(renderWishes);
     loadWishes();
 
     $("#wishForm").addEventListener("submit", (e) => {
       e.preventDefault();
       send(e.target, "wish", (status) => {
-        status.textContent = "Thank you for your lovely wishes!";
+        status.textContent = L.t("thanksWish");
         loadWishes();
       });
     });
@@ -232,25 +274,24 @@
   // ── Music ───────────────────────────────────────
   const audio = $("#bgMusic");
   const musicBtn = $("#musicBtn");
+  const syncMusicBtn = () => {
+    const on = !audio.paused;
+    musicBtn.classList.toggle("playing", on);
+    musicBtn.classList.toggle("muted", !on);
+    musicBtn.setAttribute("aria-pressed", String(on));
+    musicBtn.setAttribute("aria-label", L.t(on ? "pauseMusic" : "playMusic"));
+  };
   if (W.music) {
     audio.src = W.music;
     musicBtn.addEventListener("click", () => {
       if (audio.paused) audio.play().catch(() => {});
       else audio.pause();
     });
-    const syncMusicBtn = () => {
-      const on = !audio.paused;
-      musicBtn.classList.toggle("playing", on);
-      musicBtn.classList.toggle("muted", !on);
-      musicBtn.setAttribute("aria-pressed", String(on));
-      musicBtn.setAttribute("aria-label", on ? "Pause music" : "Play music");
-    };
     audio.addEventListener("play", syncMusicBtn);
     audio.addEventListener("pause", syncMusicBtn);
-    syncMusicBtn();
     if (W.musicCredit) {
       const credit = $("#musicCredit");
-      credit.textContent = `Music: ${W.musicCredit}`;
+      credit.textContent = `${L.t("music")}: ${W.musicCredit}`;
       credit.hidden = false;
     }
   }
@@ -289,4 +330,7 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll(".reveal").forEach((node) => observer.observe(node));
+
+  render();
+  document.addEventListener("langchange", render);
 })();

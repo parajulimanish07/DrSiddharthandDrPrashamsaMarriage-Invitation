@@ -26,14 +26,14 @@
     <div class="cover-inner">
       <p class="devanagari cover-top">शुभ विवाह</p>
       <div class="monogram"><span data-bind="groomInitial"></span><em>&amp;</em><span data-bind="brideInitial"></span></div>
-      <p class="cover-sub">The wedding of</p>
+      <p class="cover-sub" data-i18n="coverSub">The wedding of</p>
       <p class="script cover-names"><span data-bind="groomShort"></span> &amp; <span data-bind="brideShort"></span></p>
-      <button id="openBtn" class="btn">Open Invitation</button>
+      <button id="openBtn" class="btn" data-i18n="openBtn">Open Invitation</button>
     </div>
   </div>
   <div id="petals" class="petals-overlay" aria-hidden="true"></div>
 
-  <button id="musicBtn" class="music-btn" aria-label="Play music" aria-pressed="false" hidden><span class="note">♪</span></button>
+  <button id="musicBtn" class="music-btn" data-i18n-aria="playMusic" aria-label="Play music" aria-pressed="false" hidden><span class="note">♪</span></button>
   <audio id="bgMusic" loop></audio>
 
   <main>
@@ -48,13 +48,13 @@
       <div class="hero-content reveal">
         <p class="devanagari blessing-np" data-bind="blessingNepali"></p>
         <p class="blessing-en" data-bind="blessingEnglish"></p>
-        <p class="eyebrow">Together with their families</p>
+        <p class="eyebrow" data-i18n="together">Together with their families</p>
         <h1 class="names">
           <span data-bind="groomName"></span>
           <span class="amp">&amp;</span>
           <span data-bind="brideName"></span>
         </h1>
-        <p class="invite-line">invite you to celebrate their wedding</p>
+        <p class="invite-line" data-i18n="inviteLine">invite you to celebrate their wedding</p>
         <p class="date-line" data-bind="dateLine"></p>
       </div>
       <a href="#families" class="scroll-hint" aria-label="Scroll down">⌄</a>
@@ -62,7 +62,7 @@
 
     <!-- Families -->
     <section class="section families" id="families">
-      <h2 class="section-title reveal">Ceremony Info</h2>
+      <h2 class="section-title reveal" data-i18n="ourFamilies">Our Families</h2>
       <div class="family-grid">
         <div class="family reveal" id="groomFamily"></div>
         <div class="family reveal" id="brideFamily"></div>
@@ -77,20 +77,20 @@
         <article class="person reveal">
           <div class="frame"><div class="portrait" data-portrait="groom" role="img" aria-label="Dr. Siddhartha Regmi"></div></div>
           <h3 class="script" data-bind="groomName"></h3>
-          <p class="role">Groom</p>
+          <p class="role" data-i18n="groom">Groom</p>
         </article>
         <div class="heart reveal">&amp;</div>
         <article class="person reveal">
           <div class="frame"><div class="portrait" data-portrait="bride" role="img" aria-label="Dr. Prashamsa Parajuli"></div></div>
           <h3 class="script" data-bind="brideName"></h3>
-          <p class="role">Bride</p>
+          <p class="role" data-i18n="bride">Bride</p>
         </article>
       </div>
     </section>
 
     <!-- Ceremony -->
     <section class="section ceremony" id="ceremony">
-      <h2 class="section-title light reveal">Wedding Ceremony</h2>
+      <h2 class="section-title light reveal" data-i18n="ceremonyTitle">Wedding Ceremony</h2>
       <p class="devanagari ceremony-sub reveal" data-bind="ceremonySubtitle"></p>
       <p class="reveal ceremony-desc" data-bind="ceremonyDescription"></p>
       <div class="big-date reveal">
@@ -105,14 +105,14 @@
       <p class="devanagari nepali-date reveal" data-bind="nepaliDate"></p>
       <p class="venue-addr reveal"><span data-bind="venue"></span>, <span data-bind="address"></span></p>
 
-      <h3 class="sub-title reveal">Countdown</h3>
+      <h3 class="sub-title reveal" data-i18n="countdown">Countdown</h3>
       <div class="countdown reveal" id="countdown">
-        <div><span id="cd-days">0</span><small>Days</small></div>
-        <div><span id="cd-hours">0</span><small>Hours</small></div>
-        <div><span id="cd-mins">0</span><small>Minutes</small></div>
-        <div><span id="cd-secs">0</span><small>Seconds</small></div>
+        <div><span id="cd-days">0</span><small data-i18n="days">Days</small></div>
+        <div><span id="cd-hours">0</span><small data-i18n="hours">Hours</small></div>
+        <div><span id="cd-mins">0</span><small data-i18n="minutes">Minutes</small></div>
+        <div><span id="cd-secs">0</span><small data-i18n="seconds">Seconds</small></div>
       </div>
-      <p class="countdown-done" id="countdownDone" hidden>The celebration has begun!</p>
+      <p class="countdown-done" id="countdownDone" data-i18n="countdownDone" hidden>The celebration has begun!</p>
     </section>
 
     <!-- Calendar -->
@@ -122,54 +122,54 @@
         <div class="cal-grid" id="calGrid"></div>
       </div>
       <div class="cal-actions reveal">
-        <a class="btn" id="gcalBtn" target="_blank" rel="noopener">Add to Google Calendar</a>
-        <button class="btn btn-outline" id="icsBtn">Download .ics</button>
+        <a class="btn" id="gcalBtn" target="_blank" rel="noopener" data-i18n="gcal">Add to Google Calendar</a>
+        <button class="btn btn-outline" id="icsBtn" data-i18n="ics">Download .ics</button>
       </div>
     </section>
 
     <!-- Venue -->
     <section class="section map-section" id="venue">
-      <h2 class="section-title reveal">Ceremony Venue</h2>
+      <h2 class="section-title reveal" data-i18n="venueTitle">Ceremony Venue</h2>
       <p class="venue-name reveal" data-bind="venueFull"></p>
       <div class="map-wrap reveal" id="mapWrap" hidden><iframe id="mapFrame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Venue map"></iframe></div>
-      <a class="btn reveal" id="directionsBtn" target="_blank" rel="noopener">Get Directions</a>
+      <a class="btn reveal" id="directionsBtn" target="_blank" rel="noopener" data-i18n="directions">Get Directions</a>
     </section>
 
     <!-- RSVP -->
     <section class="section rsvp" id="rsvp" hidden>
-      <h2 class="section-title reveal">Confirm Attendance</h2>
+      <h2 class="section-title reveal" data-i18n="rsvpTitle">Confirm Attendance</h2>
       <form class="card-form reveal" id="rsvpForm">
-        <input name="name" placeholder="Your name*" aria-label="Your name" autocomplete="name" required maxlength="80" />
+        <input name="name" placeholder="Your name*" data-i18n-ph="yourName" data-i18n-aria="yourName" aria-label="Your name" autocomplete="name" required maxlength="80" />
         <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
-        <input name="phone" type="tel" placeholder="Phone number" aria-label="Phone number" autocomplete="tel" maxlength="30" />
+        <input name="phone" type="tel" placeholder="Phone number" data-i18n-ph="phone" data-i18n-aria="phone" aria-label="Phone number" autocomplete="tel" maxlength="30" />
         <select name="attending" id="rsvpAttending" aria-label="Attendance" required>
-          <option value="yes">Joyfully attending</option>
-          <option value="no">Regretfully can't attend</option>
+          <option value="yes" data-i18n="attendYes">Joyfully attending</option>
+          <option value="no" data-i18n="attendNo">Regretfully can't attend</option>
         </select>
         <select name="guests" id="rsvpGuests" aria-label="Number of guests">
-          <option value="1">1 guest</option>
-          <option value="2">2 guests</option>
-          <option value="3">3 guests</option>
-          <option value="4">4 guests</option>
-          <option value="5">5+ guests</option>
+          <option value="1" data-i18n="guests1">1 guest</option>
+          <option value="2" data-i18n="guests2">2 guests</option>
+          <option value="3" data-i18n="guests3">3 guests</option>
+          <option value="4" data-i18n="guests4">4 guests</option>
+          <option value="5" data-i18n="guests5">5+ guests</option>
         </select>
-        <button class="btn" type="submit">Confirm</button>
+        <button class="btn" type="submit" data-i18n="confirm">Confirm</button>
         <p class="form-status" role="status"></p>
       </form>
     </section>
 
     <!-- Guestbook -->
     <section class="section guestbook" id="guestbook" hidden>
-      <h2 class="section-title reveal">Guestbook</h2>
+      <h2 class="section-title reveal" data-i18n="guestbookTitle">Guestbook</h2>
       <form class="card-form reveal" id="wishForm">
-        <input name="name" id="wishName" placeholder="Enter your name*" aria-label="Your name" autocomplete="name" required maxlength="80" />
+        <input name="name" id="wishName" placeholder="Enter your name*" data-i18n-ph="enterName" data-i18n-aria="yourName" aria-label="Your name" autocomplete="name" required maxlength="80" />
         <label class="checkbox-field">
           <input type="checkbox" name="anonymous" id="wishAnonymous" />
-          Send this blessing anonymously
+          <span data-i18n="anonymous">Send this blessing anonymously</span>
         </label>
         <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
-        <textarea name="message" aria-label="Your wishes" placeholder="Enter your wishes*" required maxlength="600" rows="4"></textarea>
-        <button class="btn" type="submit">Send Wishes</button>
+        <textarea name="message" aria-label="Your wishes" data-i18n-aria="enterWishes" data-i18n-ph="enterWishes" placeholder="Enter your wishes*" required maxlength="600" rows="4"></textarea>
+        <button class="btn" type="submit" data-i18n="sendWishes">Send Wishes</button>
         <p class="form-status" role="status"></p>
       </form>
       <div class="wishes" id="wishList"></div>
@@ -177,13 +177,13 @@
 
     <!-- Guest photos -->
     <section class="section share-photos" id="sharePhotos" hidden>
-      <h2 class="section-title light reveal">Share Your Moments</h2>
-      <p class="reveal">Scan the code to add the photos you take during the celebration to our shared album.</p>
+      <h2 class="section-title light reveal" data-i18n="shareTitle">Share Your Moments</h2>
+      <p class="reveal" data-i18n="shareText">Scan the code to add the photos you take during the celebration to our shared album.</p>
       <div class="qr-card reveal">
-        <img src="images/qr-photos.svg" alt="QR code linking to the guest photo page" />
-        <small>Scan to share photos</small>
+        <img src="images/qr-photos.svg" data-i18n-alt="qrAlt" alt="QR code linking to the guest photo page" />
+        <small data-i18n="scanLabel">Scan to share photos</small>
       </div>
-      <div class="reveal"><a class="btn" id="photosBtn">Share a Photo</a></div>
+      <div class="reveal"><a class="btn" id="photosBtn" data-i18n="sharePhoto">Share a Photo</a></div>
     </section>
   </main>
 
@@ -198,6 +198,7 @@
   </footer>
 
   <script src="config.js"></script>
+  <script src="lang.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

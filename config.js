@@ -78,4 +78,44 @@ window.WEDDING = {
   music: "assets/wedding-song.mp3",
   // Optional credit shown in the footer (needed for CC-licensed tracks). Leave "" to hide.
   musicCredit: "",
+
+  /*
+   * Nepali version, shown when a guest taps "नेपाली". Anything left out here falls back to the English
+   * value above. Dates, times and numbers are converted to Devanagari digits automatically.
+   */
+  ne: {
+    groom: {
+      name: "डा. सिद्धार्थ रेग्मी",
+      shortName: "सिद्धार्थ",
+      parents: ["श्री गिरिराज रेग्मी", "श्रीमती सरिता रेग्मी"],
+      home: "इमाडोल, ललितपुर",
+      invite: "आफ्ना प्रिय सुपुत्रको शुभविवाह समारोहमा सहभागी भई शोभा बढाइदिनुहुन हार्दिक अनुरोध गर्दछन्।",
+    },
+    bride: {
+      name: "डा. प्रशंसा पराजुली",
+      shortName: "प्रशंसा",
+      parents: ["श्री फणीन्द्र प्रसाद पराजुली", "श्रीमती यशोदा पराजुली"],
+      home: "नयाँ ठिमी, भक्तपुर",
+      invite: "आफ्नी प्रिय सुपुत्रीको पवित्र जीवनयात्राको शुभारम्भमा उपस्थित भई आशीर्वाद दिनुहुन हार्दिक अनुरोध गर्दछन्।",
+    },
+    blessing: {
+      english: "भगवान गणेशको आशीर्वादले",
+      message: "हामी हाम्रा सन्तानहरूको विवाहको हार्दिक सूचना दिन्छौँ",
+      closing: "हाम्रा आदरणीय परिवारका आशीर्वाद र अपार खुसीका साथ, डा. सिद्धार्थ रेग्मी र डा. प्रशंसा पराजुलीको विवाहोत्सवमा सहभागी भई शोभा बढाइदिनुहुन हार्दिक निमन्त्रणा गर्दछौँ।",
+      signoff: "रेग्मी र पराजुली परिवार",
+    },
+    ceremony: {
+      title: "शुभ विवाह",
+      description: "दुई आत्मा र दुई परिवारलाई अनन्त प्रेम र प्रतिबद्धतामा बाँध्ने पवित्र वैदिक विवाह संस्कार।",
+      weekday: "शनिबार",
+      month: "डिसेम्बर",
+      time: "बिहान १०:०० बजे",
+      timeLabel: "शुभ लग्न",
+      venue: "गोल्डेन प्यालेस",
+      address: "गंखु, भक्तपुर",
+    },
+    closingLine: "तपाईंको उपस्थिति नै हाम्रो लागि सबैभन्दा ठूलो उपहार हुनेछ!",
+    // Calendar weekday headings, Monday first.
+    weekdaysShort: ["सो", "मं", "बु", "बि", "शु", "श", "आ"],
+  },
 };

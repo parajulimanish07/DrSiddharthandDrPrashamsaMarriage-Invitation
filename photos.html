@@ -12,28 +12,29 @@
 <body class="photos-page">
   <header class="photos-head">
     <p class="devanagari">शुभ विवाह</p>
-    <h1 class="section-title">Share Your Moments</h1>
-    <p>Take a photo or pick some from your gallery. Everything lands in one shared album for the couple.</p>
+    <h1 class="section-title" data-i18n="shareTitle">Share Your Moments</h1>
+    <p data-i18n="photosIntro">Take a photo or pick some from your gallery. Everything lands in one shared album for the couple.</p>
   </header>
 
   <main>
     <div class="upload-card" id="uploadCard" hidden>
-      <input type="text" id="guestName" placeholder="Your name (optional)" aria-label="Your name (optional)" maxlength="40" autocomplete="name" />
-      <label class="btn" for="cameraInput">Take a Photo</label>
-      <label class="btn btn-outline" for="galleryInput">Choose from Gallery</label>
+      <input type="text" id="guestName" placeholder="Your name (optional)" data-i18n-ph="yourNameOpt" data-i18n-aria="yourNameOpt" aria-label="Your name (optional)" maxlength="40" autocomplete="name" />
+      <label class="btn" for="cameraInput" data-i18n="takePhoto">Take a Photo</label>
+      <label class="btn btn-outline" for="galleryInput" data-i18n="chooseGallery">Choose from Gallery</label>
       <input type="file" id="cameraInput" accept="image/*" capture="environment" />
       <input type="file" id="galleryInput" accept="image/*" multiple />
       <p class="upload-status" id="uploadStatus" role="status"></p>
     </div>
-    <p class="photos-empty" id="noBackend" hidden>Photo sharing isn't available right now.</p>
+    <p class="photos-empty" id="noBackend" data-i18n="photosOff" hidden>Photo sharing isn't available right now.</p>
 
-    <h2 class="photos-title" id="albumTitle" hidden>The Album</h2>
+    <h2 class="photos-title" id="albumTitle" data-i18n="album" hidden>The Album</h2>
     <div class="photo-grid" id="photoGrid"></div>
   </main>
 
-  <a class="back-link" href="./">← Back to the invitation</a>
+  <a class="back-link" href="./" data-i18n="back">← Back to the invitation</a>
 
   <script src="config.js"></script>
+  <script src="lang.js"></script>
   <script src="photos.js"></script>
 </body>
 </html>
